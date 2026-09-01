@@ -1,0 +1,31 @@
+services:
+  # Backend Service (Spring Boot via Docker)
+  - type: web
+    name: machopulse-backend
+    env: docker
+    dockerfilePath: ./machopulse-backend/Dockerfile
+    dockerContext: ./machopulse-backend
+    plan: free
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+
+  # Frontend Service (React + Nginx via Docker)
+  - type: web
+    name: machopulse-frontend
+    env: docker
+    dockerfilePath: ./machopulse-frontend/Dockerfile
+    dockerContext: ./machopulse-frontend
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: machopulse-backend
+          property: url
