@@ -43,6 +43,7 @@ The easiest way to run MachoPulse locally is using Docker Compose, which spins u
    docker compose up --build 
 
 4. **Project Structure:**
+   ```text
    Machopulse/
    ├── machopulse-frontend/         # React + Vite / Tailwind client app
    ├── machopulse-backend/          # Spring Boot Java application
