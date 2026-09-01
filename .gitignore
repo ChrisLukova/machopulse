@@ -1,0 +1,23 @@
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+
+# IDE & Editor Settings
+.idea/
+.vscode/
+*.iml
+
+# Node & Frontend Build Outputs
+machopulse-frontend/node_modules/
+machopulse-frontend/dist/
+machopulse-frontend/build/
+
+# Backend Build Outputs
+machopulse-backend/target/
+machopulse-backend/build/
+*.log
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
