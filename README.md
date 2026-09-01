@@ -47,8 +47,8 @@ The easiest way to run MachoPulse locally is using Docker Compose, which spins u
    Machopulse/
    ├── machopulse-frontend/         # React + Vite / Tailwind client app
    ├── machopulse-backend/          # Spring Boot Java application
-   ├── docker-compose.yml# Container orchestration configuration
-   └── .env.example      # Example environment variable configuration
+   ├── docker-compose.yml           # Container orchestration configuration
+   └── .env.example                 # Example environment variable configuration
 
 5. **License:**
 This project is open-source and available for personal or portfolio use.
