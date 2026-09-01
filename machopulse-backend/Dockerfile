@@ -7,6 +7,9 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
+# Fix line endings (CRLF to LF) and ensure mvnw is executable
+RUN sed -i 's/\r$//' mvnw && chmod +x mvnw
+
 # Download dependencies (cached unless pom.xml changes)
 RUN ./mvnw dependency:go-offline -B
 
