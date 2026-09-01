@@ -32,15 +32,15 @@ The easiest way to run MachoPulse locally is using Docker Compose, which spins u
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/ChrisLukova/machopulse.git
-   cd machopulse```
+   cd machopulse ```
 2. **Configure Environment Variables:**
    Copy the example environment file to create your local `.env`:
    ```bash
-   cp .env.example .env```
+   cp .env.example .env ```
 
 3. **Build and Run Containers:**
    ```bash
-   docker compose up --build```
+   docker compose up --build ```
 
 4. **Project Structure:**
    machopulse/
