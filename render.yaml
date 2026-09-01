@@ -28,4 +28,4 @@ services:
         fromService:
           type: web
           name: machopulse-backend
-          property: url
+          property: host
