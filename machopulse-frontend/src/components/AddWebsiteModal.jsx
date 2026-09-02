@@ -48,6 +48,11 @@ export default function AddWebsiteModal({ isOpen, onClose }) {
       // Reset form and close modal
       resetForm();
       onClose();
+
+      // Delayed safety net to catch the backend's first automated health check result
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["websites"] });
+      }, 1500);
     },
     onError: (error) => {
       const apiError =
