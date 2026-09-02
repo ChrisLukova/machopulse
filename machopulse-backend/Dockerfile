@@ -2,20 +2,16 @@
 FROM eclipse-temurin:25-jdk AS build
 WORKDIR /app
 
-# Copy Maven wrapper files and configuration
-COPY mvnw .
-COPY .mvn .mvn
+# Install Maven
+RUN apt-get update && apt-get install -y maven
+
+# Copy pom.xml and download dependencies
 COPY pom.xml .
-
-# Fix line endings (CRLF to LF) and ensure mvnw is executable
-RUN sed -i 's/\r$//' mvnw && chmod +x mvnw
-
-# Download dependencies (cached unless pom.xml changes)
-RUN ./mvnw dependency:go-offline -B
+RUN mvn dependency:go-offline -B
 
 # Copy source code and build
 COPY src src
-RUN ./mvnw package -DskipTests
+RUN mvn package -DskipTests
 
 # Stage 2: Run the application on a lightweight Java 25 JRE runtime
 FROM eclipse-temurin:25-jre-alpine
