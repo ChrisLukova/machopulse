@@ -23,16 +23,29 @@ export default function WebsiteSettings({ website, onClose }) {
     onSuccess: () => {
       toast.success("Monitor configuration updated successfully");
 
-      // immediate invalidation
+      // immediate invalidation for metadata, logs, and stats
       queryClient.invalidateQueries({
         queryKey: ["website", String(website.id)],
       });
       queryClient.invalidateQueries({ queryKey: ["websites"] });
+      queryClient.invalidateQueries({
+        queryKey: ["websiteLogs", String(website.id)],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["websiteStats", String(website.id)],
+      });
+
       onClose?.(); // Close modal immediately upon successful save
 
       // Delayed safety net invalidation for catching any network or ping lag
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: ["websites"] });
+        queryClient.invalidateQueries({
+          queryKey: ["websiteLogs", String(website.id)],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["websiteStats", String(website.id)],
+        });
       }, 1500);
     },
     onError: (err) => {
@@ -46,6 +59,13 @@ export default function WebsiteSettings({ website, onClose }) {
     onSuccess: () => {
       toast.success("Monitor and logs deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["websites"] });
+      queryClient.removeQueries({ queryKey: ["website", String(website.id)] });
+      queryClient.removeQueries({
+        queryKey: ["websiteLogs", String(website.id)],
+      });
+      queryClient.removeQueries({
+        queryKey: ["websiteStats", String(website.id)],
+      });
       navigate("/dashboard");
     },
     onError: (err) => {
