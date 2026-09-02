@@ -36,17 +36,16 @@ export default function AddWebsiteModal({ isOpen, onClose }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
-  // React Query Mutation for creating a new website
+  // Mutation to add a new website to the monitoring list
   const createMutation = useMutation({
     mutationFn: (newSiteData) => websiteService.createWebsite(newSiteData),
     onSuccess: () => {
-      // 1. Tell React Query to refresh the cached list automatically
+      // Tell React Query to refresh the cached list automatically
       queryClient.invalidateQueries({ queryKey: ["websites"] });
 
-      // 2. Trigger notification
       toast.success("Website added to monitoring list.");
 
-      // 3. Reset form and close modal
+      // Reset form and close modal
       resetForm();
       onClose();
     },
