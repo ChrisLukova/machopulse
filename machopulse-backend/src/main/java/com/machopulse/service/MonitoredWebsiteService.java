@@ -73,9 +73,10 @@ public class MonitoredWebsiteService {
                 .orElseThrow(() -> new WebsiteNotFoundException("Website not found with id: " + id));
 
         String normalizedUrl = normalizeUrl(request.url());
+        boolean urlChanged = !website.getUrl().equalsIgnoreCase(normalizedUrl);
 
         // Check for duplicate URL only if the URL is actually changing
-        if (!website.getUrl().equalsIgnoreCase(normalizedUrl) &&
+        if (urlChanged &&
                 monitoredWebsiteRepository.existsByUserAndUrlIgnoreCase(currentUser, normalizedUrl)) {
             throw new DuplicateWebsiteUrlException("Website with this URL already exists");
         }
@@ -85,6 +86,12 @@ public class MonitoredWebsiteService {
         website.setCheckIntervalSeconds(request.checkIntervalSeconds());
 
         MonitoredWebsite updatedWebsite = monitoredWebsiteRepository.save(website);
+
+        // Immediately ping the new URL for status updates
+        if (urlChanged) {
+            pingLogService.executePing(updatedWebsite);
+        }
+
         return monitoredWebsiteMapper.toResponse(updatedWebsite);
     }
 
