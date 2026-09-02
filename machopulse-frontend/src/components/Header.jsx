@@ -91,13 +91,13 @@ export default function Header({ onOpenAddModal }) {
 
           <button
             onClick={handleManualRefresh}
-            disabled={isRefetching}
-            className="border border-[#EAEAEA] px-2.5 py-1 text-xs font-bold uppercase flex items-center space-x-1 hover:bg-neutral-100 transition-colors cursor-pointer disabled:opacity-50"
+            disabled={isPending || isRefetching}
+            className="border border-[#EAEAEA] px-2.5 py-1 text-xs font-bold uppercase flex items-center space-x-1 hover:bg-neutral-100 transition-colors cursor-pointer disabled:opacity-50 diabled:cursor-not-allowed"
             title="Refresh Data"
           >
             <RefreshCw
               className={`w-3.5 h-3.5 ${
-                isRefetching ? "animate-spin text-[#FF5500]" : ""
+                isRefetching || isPending ? "animate-spin text-[#FF5500]" : ""
               }`}
             />
           </button>
