@@ -7,6 +7,7 @@
 MachoPulse is a full-stack, real-time system uptime and health monitoring application. It tracks websites, APIs, and backend services, providing live status updates, telemetry audit logs, and response latency charts.
 
 > **[Check out the Live Demo Here](https://machopulse-frontend.onrender.com)**
+> *Note: Hosted on Render's free tier—please allow up to 30–50 seconds for the server to spin up on initial load if it has been inactive!*
 
 ## Tech Stack
 
