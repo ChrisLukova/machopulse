@@ -22,11 +22,18 @@ export default function WebsiteSettings({ website, onClose }) {
       websiteService.updateWebsite(website.id, updatedData),
     onSuccess: () => {
       toast.success("Monitor configuration updated successfully");
+
+      // immediate invalidation
       queryClient.invalidateQueries({
         queryKey: ["website", String(website.id)],
       });
       queryClient.invalidateQueries({ queryKey: ["websites"] });
-      onClose?.(); // Close modal upon successful save
+      onClose?.(); // Close modal immediately upon successful save
+
+      // Delayed safety net invalidation for catching any network or ping lag
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["websites"] });
+      }, 1500);
     },
     onError: (err) => {
       toast.error(err?.response?.data?.message || "Failed to update monitor");
